@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: white;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+  }
+
+  html {
+    @apply bg-background text-foreground;
+  }
+
+  body {
+    @apply antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .brutal-border {
+    @apply border-3 border-black;
+  }
+
+  .brutal-card {
+    @apply bg-white brutal-border shadow-brutal transition-all duration-200 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-brutal-lg;
+  }
+
+  .brutal-input {
+    @apply brutal-border bg-white px-4 py-2 focus:outline-none focus:ring-0 focus:shadow-brutal-sm;
+  }
+
+  .brutal-btn {
+    @apply brutal-border inline-flex items-center justify-center px-4 py-2 font-medium transition-all duration-200 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none;
+  }
+
+  .brutal-btn-primary {
+    @apply brutal-btn bg-primary text-black shadow-brutal hover:shadow-brutal-lg;
+  }
+
+  .brutal-btn-secondary {
+    @apply brutal-btn bg-secondary text-foreground shadow-brutal hover:shadow-brutal-lg;
+  }
+
+  .brutal-btn-outline {
+    @apply brutal-btn bg-white text-foreground shadow-brutal hover:shadow-brutal-lg;
+  }
+
+  .brutal-badge {
+    @apply inline-flex items-center rounded-none brutal-border px-2 py-0.5 text-xs font-bold;
+  }
+
+  /* Micro-interactions */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:-translate-y-1;
+  }
+
+  .hover-tilt {
+    @apply transition-transform duration-200 hover:rotate-1;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  .pulse-animation {
+    @apply animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite];
+  }
+
+  .wiggle-animation {
+    @apply animate-[wiggle_1s_ease-in-out_infinite];
+  }
+
+  /* Page transitions */
+  .page-enter {
+    @apply opacity-0;
+  }
+
+  .page-enter-active {
+    @apply opacity-100 transition-opacity duration-300;
+  }
+
+  .page-exit {
+    @apply opacity-100;
+  }
+
+  .page-exit-active {
+    @apply opacity-0 transition-opacity duration-300;
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+/* Force background to be visible */
+html,
+body,
+#__next {
+  background-color: white !important;
+}
+
+/* Custom Hero Gradient */
+.custom-hero-gradient {
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+  background-size: 150px 150px, 150px 150px, 30px 30px, 30px 30px;
+  background-color: transparent;
+  background-image: linear-gradient(
+      rgba(219, 219, 219, 0.8) 2px,
+      transparent 2px
+    ),
+    linear-gradient(90deg, rgba(219, 219, 219, 0.8) 2px, transparent 2px),
+    linear-gradient(rgba(219, 219, 219, 0.8) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      rgba(219, 219, 219, 0.8) 1px,
+      rgba(255, 255, 255, 0) 1px
+    );
+}
+
+.custom-hero-gradient-absolute {
+  /* background: radial-gradient(
+    64.4% 50% at 50.6% 45.4%,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(255, 255, 255) 100%
+  ); */
+  background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  flex: none;
+  height: 100vh;
+  left: calc(50.00000000000002% - 100% / 2);
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.font-handwriting {
+  font-family: "Gloria Hallelujah",sans-serif;
+}
