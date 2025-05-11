@@ -8,17 +8,30 @@ import Badge from "../common/Badge";
 import type { Community, Platform } from "../../types";
 import { useCommunity } from "@/src/contexts/CommunityContext";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 
 interface CommunityCardProps {
   community: Community;
-  variant?: "neobrutalist" | "minimal";
+  variant?:
+    | "neobrutalist"
+    | "minimal"
+    | "glassmorphic"
+    | "skeuomorphic"
+    | "flat";
 }
 
-const CommunityCard: React.FC<CommunityCardProps> = ({ 
+const CommunityCard: React.FC<CommunityCardProps> = ({
   community,
-  variant = "neobrutalist" // default style
+  variant = "neobrutalist", // default style
 }) => {
   const { incrementClickCount } = useCommunity();
+  const [rotation, setRotation] = useState(0);
+
+  useEffect(() => {
+    if (variant === "neobrutalist") {
+      setRotation(Math.floor(Math.random() * 5) - 2);
+    }
+  }, [variant]);
 
   const getPlatformIcon = (platform: Platform) => {
     switch (platform) {
@@ -55,11 +68,194 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
     window.open(community.inviteLinks[platform], "_blank");
   };
 
+  // Glassmorphic variant
+  if (variant === "glassmorphic") {
+    return (
+      <div className="backdrop-blur-lg bg-white/30 rounded-xl p-6 border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
+        <div className="flex flex-col items-center text-center">
+          <div className="relative mb-4">
+            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-white/30 backdrop-blur-sm">
+              <img
+                src={community.imageUrl || "/placeholder.svg"}
+                alt={community.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {community.badges.length > 0 && (
+              <div className="absolute -top-2 -right-2 flex space-x-1">
+                {community.badges.includes("starred") && (
+                  <Badge
+                    variant="starred"
+                    className="backdrop-blur-sm bg-yellow-400/30"
+                  >
+                    ★
+                  </Badge>
+                )}
+                {community.badges.includes("on_fire") && (
+                  <Badge
+                    variant="onFire"
+                    className="backdrop-blur-sm bg-orange-400/30"
+                  >
+                    🔥
+                  </Badge>
+                )}
+              </div>
+            )}
+          </div>
+
+          <Link
+            href={`/community/${community.id}`}
+            className="hover:opacity-80 transition-opacity"
+          >
+            <h3 className="text-2xl font-bold text-white mb-2">
+              {community.name}
+            </h3>
+          </Link>
+
+          <p className="text-white/80 mb-4 line-clamp-2">
+            {community.description}
+          </p>
+
+          <div className="w-full space-y-2">
+            {community.platforms.map((platform) => (
+              <button
+                key={platform}
+                onClick={() => handleJoinClick(platform)}
+                className="w-full flex items-center justify-center px-4 py-2 rounded-lg bg-white/20 hover:bg-white/30 text-white transition-colors"
+              >
+                {getPlatformIcon(platform)}
+                <span className="ml-2">Join {getPlatformName(platform)}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Skeuomorphic variant
+  if (variant === "skeuomorphic") {
+    return (
+      <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl p-6 shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] hover:shadow-[inset_0_2px_4px_rgba(0,0,0,0.15)] transition-all duration-300">
+        <div className="flex flex-col items-center text-center">
+          <div className="relative mb-4">
+            <div className="w-24 h-24 rounded-xl overflow-hidden shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)] bg-white p-1">
+              <img
+                src={community.imageUrl || "/placeholder.svg"}
+                alt={community.name}
+                className="w-full h-full object-cover rounded-lg"
+              />
+            </div>
+            {community.badges.length > 0 && (
+              <div className="absolute -top-2 -right-2 flex space-x-1">
+                {community.badges.includes("starred") && (
+                  <Badge
+                    variant="starred"
+                    className="bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-md"
+                  >
+                    ★
+                  </Badge>
+                )}
+                {community.badges.includes("on_fire") && (
+                  <Badge
+                    variant="onFire"
+                    className="bg-gradient-to-br from-orange-400 to-orange-500 shadow-md"
+                  >
+                    🔥
+                  </Badge>
+                )}
+              </div>
+            )}
+          </div>
+
+          <Link
+            href={`/community/${community.id}`}
+            className="hover:opacity-80 transition-opacity"
+          >
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">
+              {community.name}
+            </h3>
+          </Link>
+
+          <p className="text-gray-600 mb-4 line-clamp-2">
+            {community.description}
+          </p>
+
+          <div className="w-full space-y-2">
+            {community.platforms.map((platform) => (
+              <button
+                key={platform}
+                onClick={() => handleJoinClick(platform)}
+                className="w-full flex items-center justify-center px-4 py-2 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-md hover:shadow-lg transition-all duration-300 active:translate-y-0.5"
+              >
+                {getPlatformIcon(platform)}
+                <span className="ml-2">Join {getPlatformName(platform)}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Flat variant (minimalistic)
+  if (variant === "flat") {
+    return (
+      <div className="bg-white rounded-lg p-4 hover:bg-gray-50 transition-colors duration-200">
+        <div className="flex items-start space-x-4">
+          <div className="relative flex-shrink-0">
+            <img
+              src={community.imageUrl || "/placeholder.svg"}
+              alt={community.name}
+              className="w-16 h-16 rounded-lg object-cover"
+            />
+            {community.badges.length > 0 && (
+              <div className="absolute -top-1 -right-1">
+                {community.badges.includes("starred") && (
+                  <span className="text-yellow-400">★</span>
+                )}
+                {community.badges.includes("on_fire") && (
+                  <span className="text-orange-400">🔥</span>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="flex-grow">
+            <Link
+              href={`/community/${community.id}`}
+              className="hover:underline"
+            >
+              <h3 className="text-lg font-medium text-gray-900">
+                {community.name}
+              </h3>
+            </Link>
+            <p className="text-sm text-gray-600 line-clamp-2 mt-1">
+              {community.description}
+            </p>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {community.platforms.map((platform) => (
+                <button
+                  key={platform}
+                  onClick={() => handleJoinClick(platform)}
+                  className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
+                >
+                  {getPlatformIcon(platform)}
+                  <span className="ml-1">{getPlatformName(platform)}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Minimal variant
   if (variant === "minimal") {
     return (
       <div className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-200">
         <div className="flex items-center space-x-4">
-          {/* Logo */}
           <div className="relative flex-shrink-0">
             <img
               src={community.imageUrl || "/placeholder.svg"}
@@ -72,7 +268,9 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
                   <span className="flex h-4 w-4">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-4 w-4 bg-yellow-500">
-                      <span className="text-[8px] text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">★</span>
+                      <span className="text-[8px] text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        ★
+                      </span>
                     </span>
                   </span>
                 )}
@@ -80,9 +278,11 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
             )}
           </div>
 
-          {/* Content */}
           <div className="flex-grow">
-            <Link href={`/community/${community.id}`} className="hover:underline">
+            <Link
+              href={`/community/${community.id}`}
+              className="hover:underline"
+            >
               <h3 className="text-lg font-semibold text-gray-900 mb-1">
                 {community.name}
               </h3>
@@ -109,15 +309,14 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
   }
 
   // Neobrutalist variant (default)
-  const rotation = Math.floor(Math.random() * 5) - 2;
-  
   return (
-    <div className={cn(
-      "brutal-card p-6 transform hover:translate-y-[-4px] transition-transform duration-200",
-      `rotate-[${rotation}deg]`
-    )}>
+    <div
+      className={cn(
+        "brutal-card p-6 transform hover:translate-y-[-4px] transition-transform duration-200",
+        variant === "neobrutalist" ? `rotate-[${rotation}deg]` : ""
+      )}
+    >
       <div className="flex flex-col items-center text-center">
-        {/* Logo with Neobrutalist style */}
         <div className="relative mb-4">
           <div className="w-24 h-24 brutal-border bg-white p-2 rotate-2 shadow-brutal">
             <img
@@ -126,21 +325,26 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
               className="w-full h-full object-contain"
             />
           </div>
-          {/* Badges */}
           {community.badges.length > 0 && (
             <div className="absolute -top-2 -right-2 flex space-x-1">
               {community.badges.includes("starred") && (
-                <Badge variant="starred" className="font-handwriting">★ Star</Badge>
+                <Badge variant="starred" className="font-handwriting">
+                  ★ Star
+                </Badge>
               )}
               {community.badges.includes("on_fire") && (
-                <Badge variant="onFire" className="font-handwriting">🔥 Hot</Badge>
+                <Badge variant="onFire" className="font-handwriting">
+                  🔥 Hot
+                </Badge>
               )}
             </div>
           )}
         </div>
 
-        {/* Community Info */}
-        <Link href={`/community/${community.id}`} className="hover:underline mb-2">
+        <Link
+          href={`/community/${community.id}`}
+          className="hover:underline mb-2"
+        >
           <h3 className="text-2xl font-bold font-handwriting">
             {community.name}
           </h3>
@@ -150,13 +354,14 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
           {community.description}
         </p>
 
-        {/* Platform Buttons with Neobrutalist style */}
         <div className="w-full space-y-2">
           {community.platforms.map((platform) => (
             <Button
               key={platform}
               fullWidth
-              variant={platform === community.platforms[0] ? "primary" : "outline"}
+              variant={
+                platform === community.platforms[0] ? "primary" : "outline"
+              }
               className="brutal-btn font-handwriting text-lg"
               leftIcon={getPlatformIcon(platform)}
               onClick={() => handleJoinClick(platform)}

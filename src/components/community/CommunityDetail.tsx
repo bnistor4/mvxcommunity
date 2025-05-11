@@ -2,20 +2,28 @@
 
 import type React from "react"
 import Link from "next/link"
-import { useParams, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { ArrowLeft, ExternalLink, MessageCircle, Twitter, Share2 } from "lucide-react"
 import Button from "../common/Button"
 import Badge from "../common/Badge"
 import { useCommunity } from "@/src/contexts/CommunityContext"
 import type { Platform } from "../../types"
+import { useState, useEffect } from "react"
 
-const CommunityDetail: React.FC = () => {
-  const params = useParams<{ id: string }>()
-  const id = params?.id as string
+interface CommunityDetailProps {
+  communityId: string
+}
+
+const CommunityDetail: React.FC<CommunityDetailProps> = ({ communityId }) => {
   const router = useRouter()
   const { getCommunity, incrementClickCount } = useCommunity()
+  const [cardRotation, setCardRotation] = useState(0)
 
-  const community = getCommunity(id || "")
+  useEffect(() => {
+    setCardRotation(Math.floor(Math.random() * 3) - 1)
+  }, [])
+
+  const community = getCommunity(communityId)
 
   if (!community || community.status !== "approved") {
     router.push("/")
@@ -81,9 +89,6 @@ const CommunityDetail: React.FC = () => {
     }
   }
 
-  // Generate a random rotation between -1 and 1 degrees for subtle tilt
-  const rotation = Math.floor(Math.random() * 3) - 1
-
   return (
     <div className="container mx-auto px-4 py-16">
       <Link
@@ -94,7 +99,7 @@ const CommunityDetail: React.FC = () => {
         Back to Communities
       </Link>
 
-      <div className={`brutal-card p-0 overflow-hidden transform rotate-[${rotation}deg]`}>
+      <div className={`brutal-card p-0 overflow-hidden transform rotate-[${cardRotation}deg]`}>
         {/* Header with Image */}
         <div className="relative h-48 sm:h-72 bg-primary">
           <img

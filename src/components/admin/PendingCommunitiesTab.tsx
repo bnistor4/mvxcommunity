@@ -5,6 +5,7 @@ import { Check, X, ExternalLink } from "lucide-react"
 import Button from "../common/Button"
 import { useCommunity } from "@/src/contexts/CommunityContext"
 import type { Community } from "../../types"
+import { useState, useEffect } from "react"
 
 const PendingCommunitiesTab: React.FC = () => {
   const { pendingCommunities, approveCommunity, rejectCommunity } = useCommunity()
@@ -57,6 +58,12 @@ interface CommunityReviewCardProps {
 }
 
 const CommunityReviewCard: React.FC<CommunityReviewCardProps> = ({ community, onApprove, onReject }) => {
+  const [cardRotation, setCardRotation] = useState(0);
+
+  useEffect(() => {
+    setCardRotation(Math.floor(Math.random() * 3) - 1);
+  }, []);
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -65,11 +72,8 @@ const CommunityReviewCard: React.FC<CommunityReviewCardProps> = ({ community, on
     })
   }
 
-  // Generate a random rotation between -1 and 1 degrees for subtle tilt
-  const rotation = Math.floor(Math.random() * 3) - 1
-
   return (
-    <div className={`brutal-card p-0 overflow-hidden transform rotate-[${rotation}deg]`}>
+    <div className={`brutal-card p-0 overflow-hidden transform rotate-[${cardRotation}deg]`}>
       <div className="px-6 py-4 bg-secondary brutal-border border-t-0 border-l-0 border-r-0 flex justify-between items-center">
         <div>
           <h3 className="text-xl font-bold text-foreground">{community.name}</h3>

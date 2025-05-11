@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Star, Flame, Search } from "lucide-react"
 import Button from "../common/Button"
 import { useCommunity } from "@/src/contexts/CommunityContext"
+import Link from "next/link"
 
 const ApprovedCommunitiesTab: React.FC = () => {
   const { communities, updateBadges } = useCommunity()
@@ -139,14 +140,19 @@ const ApprovedCommunitiesTab: React.FC = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap brutal-border border-t-0 border-l-0 border-b-0">
-                      <a
+                      <Link
                         href={`/community/${community.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="brutal-border bg-white px-3 py-1 text-primary hover:bg-secondary hover:text-foreground transition-colors inline-block"
+                        passHref
+                        legacyBehavior
                       >
-                        View Profile
-                      </a>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="brutal-border bg-white px-3 py-1 text-primary hover:bg-secondary hover:text-foreground transition-colors inline-block"
+                        >
+                          View Profile
+                        </a>
+                      </Link>
                     </td>
                   </tr>
                 ))}

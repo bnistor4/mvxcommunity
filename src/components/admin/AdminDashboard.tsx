@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
-import { Bell } from "lucide-react"
+// import { Bell } from "lucide-react" // Removed unused import
 import { useCommunity } from "@/src/contexts/CommunityContext"
 import ApprovedCommunitiesTab from "./ApprovedCommunitiesTab"
 import PendingCommunitiesTab from "./PendingCommunitiesTab"

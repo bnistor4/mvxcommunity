@@ -1,12 +1,10 @@
+"use client"
+
 import { useAuth } from "@/src/contexts/AuthContext"
-import AdminDashboard from "@/src/components/admin/AdminDashboard"
+import AdminDashboard from "./AdminDashboard"
 import { redirect } from "next/navigation"
 
-export async function generateStaticParams() {
-  return []
-}
-
-export default function Admin() {
+export default function AdminClient() {
   const { user, isAdmin } = useAuth()
 
   if (!user || !isAdmin) {
@@ -18,4 +16,4 @@ export default function Admin() {
       <AdminDashboard />
     </div>
   )
-}
+} 

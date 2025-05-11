@@ -6,6 +6,7 @@ import { Search, Filter } from "lucide-react";
 import CommunityCard from "./CommunityCard";
 import { Platform } from "../../types";
 import { useCommunity } from "@/src/contexts/CommunityContext";
+import Link from "next/link";
 
 const CommunityList: React.FC = () => {
   const {
@@ -105,7 +106,7 @@ const CommunityList: React.FC = () => {
         {filteredCommunities.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCommunities.map((community) => (
-              <CommunityCard key={community.id} community={community} />
+              <CommunityCard key={community.id} community={community} variant="minimal" />
             ))}
           </div>
         ) : (
@@ -115,12 +116,11 @@ const CommunityList: React.FC = () => {
             </h3>
             <p className="text-foreground text-lg">
               Try adjusting your filters or search query, or{" "}
-              <a
-                href="/submit"
-                className="text-primary font-bold hover:underline"
-              >
-                submit your own community
-              </a>
+              <Link href="/submit" legacyBehavior passHref>
+                <a className="text-primary font-bold hover:underline">
+                  submit your own community
+                </a>
+              </Link>
               !
             </p>
           </div>

@@ -1,20 +1,17 @@
-"use client"
+import { mockCommunities } from "@/src/data/mockData"
+import CommunityPageClient from "@/src/components/community/CommunityPageClient"
 
-import { useParams } from "next/navigation"
-import CommunityDetail from "@/components/community/CommunityDetail"
-import { useCommunity } from "@/src/contexts/CommunityContext"
-import { redirect } from "next/navigation"
+// This function tells Next.js which community pages to generate at build time
+export async function generateStaticParams() {
+  // Get all approved communities from mock data
+  const communities = mockCommunities.filter(c => c.status === "approved")
+  
+  // Return an array of objects with the id parameter for each community
+  return communities.map((community) => ({
+    id: community.id,
+  }))
+}
 
-export default function CommunityPage() {
-  const params = useParams()
-  const id = params?.id as string
-  const { getCommunity } = useCommunity()
-
-  const community = getCommunity(id)
-
-  if (!community || community.status !== "approved") {
-    redirect("/")
-  }
-
-  return <CommunityDetail communityId={id} />
+export default function CommunityPage({ params }: { params: { id: string } }) {
+  return <CommunityPageClient id={params.id} />
 }
