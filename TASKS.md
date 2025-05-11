@@ -33,10 +33,15 @@ Questo documento tiene traccia delle attività completate e da completare per ri
 - ✅ Ottimizzato il layout per i loghi delle community
 - ✅ Aggiunto supporto per switch tra varianti tramite prop
 
-### 7. Compatibilità Node.js
+### 7. Compatibilità Node.js e Dipendenze
 - [ ] Aggiornare Node.js alla versione >=18.18.0 (attualmente 18.17.1)
 - [x] Aggiunto campo "engines" in package.json per specificare la versione richiesta
-- [ ] Verificare la build dopo l'aggiornamento di Node.js
+- [x] Corretto la versione di Next.js da 15.2.4 a 14.1.0
+- [x] Aggiornato React e React DOM alla versione 18.2.0
+- [x] Rimosso dipendenze con versione "latest"
+- [x] Aggiornato i tipi TypeScript e altre dipendenze
+- [x] Migrato da pnpm a npm (package manager standard)
+- [ ] Verificare la build dopo l'aggiornamento delle dipendenze
 
 ## Problemi Rimanenti da Risolvere
 
