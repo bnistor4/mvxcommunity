@@ -27,6 +27,17 @@ Questo documento tiene traccia delle attività completate e da completare per ri
 - ✅ Importato il font Gloria Hallelujah in `app/layout.tsx`
 - ✅ Aggiunta la classe `font-handwriting` in `app/globals.css`
 
+### 6. Redesign CommunityCard ✅
+- ✅ Creata variante "neobrutalist" con stile handwriting e bordi marcati
+- ✅ Creata variante "minimal" con design moderno e pulito
+- ✅ Ottimizzato il layout per i loghi delle community
+- ✅ Aggiunto supporto per switch tra varianti tramite prop
+
+### 7. Compatibilità Node.js
+- [ ] Aggiornare Node.js alla versione >=18.18.0 (attualmente 18.17.1)
+- [x] Aggiunto campo "engines" in package.json per specificare la versione richiesta
+- [ ] Verificare la build dopo l'aggiornamento di Node.js
+
 ## Problemi Rimanenti da Risolvere
 
 ### 1. Duplicazione Componenti
@@ -48,3 +59,4 @@ Questo documento tiene traccia delle attività completate e da completare per ri
 - `postcss.config.mjs` - Configurazione PostCSS unificata ✅
 - `components.json` - Configurazione dei componenti aggiornata ✅
 - `app/layout.tsx` - Importazione del font Gloria Hallelujah ✅
+- `src/components/home/CommunityCard.tsx` - Component card ridisegnato con due varianti ✅
