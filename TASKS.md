@@ -41,7 +41,17 @@ Questo documento tiene traccia delle attività completate e da completare per ri
 - [x] Rimosso dipendenze con versione "latest"
 - [x] Aggiornato i tipi TypeScript e altre dipendenze
 - [x] Migrato da pnpm a npm (package manager standard)
-- [ ] Verificare la build dopo l'aggiornamento delle dipendenze
+- [x] Verificare la build dopo l'aggiornamento delle dipendenze
+
+### 8. Risoluzione Errori di Build (App Router vs Pages Router) ✅
+- [x] Modificato `app/admin/page.tsx` per utilizzare correttamente `AdminClient.tsx` per la logica di autenticazione.
+- [x] Identificata e rimossa la directory `src/pages` che causava conflitti con l'App Router.
+- [x] Riattivata la funzione `generateStaticParams` in `app/submit/page.tsx`.
+- [x] Riattivata la funzione `generateStaticParams` in `app/page.tsx` (Home).
+- [x] Assicurato che `app/page.tsx` e `app/submit/page.tsx` utilizzino i rispettivi componenti client (`HomeClient` e `SubmitClient`).
+- [x] Corretto il percorso di importazione per `AuthProvider` in `app/providers.tsx`.
+- [x] Rimosso `generateStaticParams` da `app/admin/page.tsx` per trattarla come pagina dinamica e risolvere l'errore `useAuth` durante il build.
+- [x] Rimosso commenti di diagnosi da `generateStaticParams` in `app/page.tsx` e `app/submit/page.tsx`.
 
 ## Problemi Rimanenti da Risolvere
 

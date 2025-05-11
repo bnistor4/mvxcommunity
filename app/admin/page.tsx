@@ -1,21 +1,9 @@
-import { useAuth } from "@/src/contexts/AuthContext"
-import AdminDashboard from "@/src/components/admin/AdminDashboard"
-import { redirect } from "next/navigation"
+import AdminClient from "@/src/components/admin/AdminClient"
 
-export async function generateStaticParams() {
-  return []
-}
+// export async function generateStaticParams() {
+//   return []
+// }
 
 export default function Admin() {
-  const { user, isAdmin } = useAuth()
-
-  if (!user || !isAdmin) {
-    redirect("/login")
-  }
-
-  return (
-    <div className="container mx-auto px-4 py-12">
-      <AdminDashboard />
-    </div>
-  )
+  return <AdminClient />;
 }

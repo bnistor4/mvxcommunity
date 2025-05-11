@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { AuthProvider } from "@/contexts/AuthContext"
+import { AuthProvider } from "@/src/contexts/AuthContext"
 import { CommunityProvider } from "@/src/contexts/CommunityContext"
 
 export function Providers({ children }: { children: React.ReactNode }) {
